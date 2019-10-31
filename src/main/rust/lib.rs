@@ -121,6 +121,35 @@ pub unsafe extern "C" fn Java_cash_z_wallet_sdk_jni_RustBackend_initAccountsTabl
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn Java_cash_z_wallet_sdk_jni_RustBackend_initAccountsWithKeys(
+    env: JNIEnv<'_>,
+    _: JClass<'_>,
+    db_data: JString<'_>,
+    jextfvks: jobjectArray
+) -> jboolean  {
+    let res = panic::catch_unwind(|| {
+        let db_data = utils::java_string_to_rust(&env, db_data);
+
+        let len = env.get_array_length(jextfvks)
+            .expect("Couldn't get array length");
+
+        let extfvks: Vec<_> = (0..len)
+            .map(|i| {
+                let elem_str: JString = env.get_object_array_element(jextfvks, i).unwrap().into();
+                utils::java_string_to_rust(&env, elem_str)
+            })
+            // TODO: take str4d's advice and use the encoding crate to convert from string
+            .map(ExtendedFullViewingKey::from).collect(); // of course, this doesn't work. use encoding crate, instead
+
+        match init_accounts_table(&db_data, &extfvks) {
+            Ok(()) => Ok(JNI_TRUE),
+            Err(e) => Err(format_err!("Error while initializing accounts: {}", e)),
+        }
+    });
+    unwrap_exc_or(&env, res, JNI_FALSE)
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn Java_cash_z_wallet_sdk_jni_RustBackend_initBlocksTable(
     env: JNIEnv<'_>,
     _: JClass<'_>,
