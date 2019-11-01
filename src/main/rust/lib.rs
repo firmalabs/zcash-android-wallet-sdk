@@ -136,10 +136,9 @@ pub unsafe extern "C" fn Java_cash_z_wallet_sdk_jni_RustBackend_initAccountsWith
         let extfvks: Vec<_> = (0..len)
             .map(|i| {
                 let elem_str: JString = env.get_object_array_element(jextfvks, i).unwrap().into();
-                utils::java_string_to_rust(&env, elem_str)
-            })
-            // TODO: take str4d's advice and use the encoding crate to convert from string
-            .map(ExtendedFullViewingKey::from).collect(); // of course, this doesn't work. use encoding crate, instead
+                let extsk = utils::java_string_to_rust(&env, elem_str);
+                decode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY, &extsk)
+            });
 
         match init_accounts_table(&db_data, &extfvks) {
             Ok(()) => Ok(JNI_TRUE),
