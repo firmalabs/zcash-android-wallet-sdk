@@ -42,8 +42,7 @@ UX/documentation. We include brief technical details of each weakness.
 There are several weakneses that we beleive most users would find
 counter-intuitive, or at least not expect to be the case based on their
 experience using other cryptocurrency wallets or `zcashd`. We've highlighted
-those ones in bold. Brief technical details of how the adversary could
-exploit the weakness are included with each one.
+those ones in bold.
 
 Let's begin with the most powerful kind of adversary considered by our model.
 
