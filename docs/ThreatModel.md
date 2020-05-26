@@ -7,41 +7,43 @@ apps as well as developers making use of the SDK in their own apps. See the
 complete explanation of the threat modeling methodology we use; a short
 summary of the methodology is:
 
-- This document lists security invariants that the apps and SDK should
+- This document lists "security invariants" that the apps and SDK should
 currently provide. Users and developers *should not* rely on any security or
 privacy properties that are not explicitly listed here. If there's a security
 or privacy property that you would like to be able to rely on, but isn't
 listed here, then please raise an issue on GitHub.
-- We aim to state "security invariants" in a language that end-users would
+- We aim to state security invariants in a language that end-users would
 understand. If a security invariant uses technical language or involves
 complicated concepts then users are unlikely to understand it, which could
 lead to them being overconfident in their use of the software.
 
 *If you are a security auditor, please try to break one of the security
-invariants and think about which important security invariants might be
+invariants or think about which important security invariants might be
 missing from this list!*
 
-The security properties that the apps and SDKs can provide depend on how
-powerful the adversary trying to attack the user is. This threat model's
-security invariants are organized into sections for each kind of adversary.
-We start with the most poweful kind of adversary, one who has completely
-compromised the lightwalletd server the wallet connects to, can intercept
-network traffic, install apps on the user's phone, etc., and end with the
-weakest kind of adversary, one who simply knows the user's address and can
-observe the public blockchain. For simplicity of explanation, the stronger
-adversaries have all of the capabilities of the weaker adversaries. For each
-kind of adversary, we list:
+The security properties that the apps and SDKs provide depend on how powerful
+the adversary trying to attack the user is. This threat model's security
+invariants are organized into sections for each kind of adversary. We start
+with the most poweful kind of adversary, one who has completely compromised
+the lightwalletd server the wallet connects to, can intercept network
+traffic, install apps on the user's phone, etc., and end with the weakest
+kind of adversary, one who simply knows the user's address and can observe
+the public blockchain. In order to simplify this document, we assume that the
+stronger adversaries have all of the capabilities of the weaker adversaries.
+For each kind of adversary, we list:
 
 - Which security invariants we expect are satisfied against that adversary
-(and all weaker ones).
-- Which security invariants we know are *not* satisfied against that
-adversary (and all stronger ones).
+(and all weaker ones). If one of these are false, then it's a security bug.
+- Known weakneses: Which security invariants we know are *not* satisfied
+against that adversary (and all stronger ones). If a user does not understand
+one of these weakneses, then that is a security problem in the app's
+UX/documentation. We include brief technical details of each weakness.
 
-There are several weakneses in the current implementation that we beleive
-most users would find counter-intuitive, or at least not expect to be the
-case based on their experience using other cryptocurrency wallets. We've
-highlighted those ones in bold. Brief technical details of how the adversary
-could exploit the weakness are included with each one.
+There are several weakneses that we beleive most users would find
+counter-intuitive, or at least not expect to be the case based on their
+experience using other cryptocurrency wallets or `zcashd`. We've highlighted
+those ones in bold. Brief technical details of how the adversary could
+exploit the weakness are included with each one.
 
 Let's begin with the most powerful kind of adversary considered by our model.
 
