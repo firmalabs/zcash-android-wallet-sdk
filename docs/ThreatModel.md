@@ -82,7 +82,7 @@ as long as the other user isn't using the same lightwalletd service provider
 and there is no collusion between the adversary and that other service provider.
     - This is not a useful security invariant, because it is hard for users to understand.
 - can't find out one of the user's wallet addresses unless they've given it out.
-  - **Note that this adversary *can* check whether an address they have belongs to the user, see the weaknesses below.**
+  - **Note that this adversary *can* check whether an address they have belongs to the user, see the weaknesses in the sections below.**
 - can't make the user think person X has sent them funds when it was actually someone different.
 - can't make the funds go to someone else when someone was trying to send the user funds.
 - can't make the user send the wrong amount of funds.
@@ -102,10 +102,10 @@ adversary can...
 
 - **make the user think they have (or will have) spendable funds when they don't.**
     - They can repeat a transaction to the user's wallet many times to cause the wallet to think it has more balance than it can actually spend.
-- **make the wallet display the wrong memo for a given transaction.**
-    - They can return the wrong note ciphertext (e.g. one from a different transaction) when the wallet requests the full one to obtain the memo field.
 - **make the user think their balance is lower than it actually is.**
     - They can omit transactions destined to user, so that the user's wallet can have spendable funds that it isn't aware of.
+- **make the wallet display the wrong memo for a given transaction.**
+    - They can return the wrong note ciphertext (e.g. one from a different transaction) when the wallet requests the full one to obtain the memo field.
 - **make the user think a transaction they sent succeeded when it actually failed.**
     - If the user's transaction gets reorged-away or never mined, they could make it look like it was actually mined.
 - **make the user think a transaction they sent failed when it actually succeeded.**
@@ -187,16 +187,19 @@ The adversary can...
 - tell which of many users of the lightwalletd instance the user is.
   - If the user reconnects from the same IP address, they can usually assume it is the same user.
 - silently prevent the user from receiving wallet security updates or security notices
-  - By blocking the wallet's connection to the internet.
+  - By blocking the phone's connection to the internet or app store.
 - tell when the user's wallet was created.
     - The wallet only downloads blocks starting with its birthday. By
     observing how much bandwidth gets used during the initial download, the
     adversary can determine roughly how many blocks it downloaded, and thus
     roughtly what its birthday is.
 - tell which cryptocurrencies the user is using if the SDK is used in a multi-currency wallet.
-    - The adversary would be able to see that the wallet is connecting to a lightwalletd instance, which reveals they are using Zcash.
+    - The adversary would be able to see that the wallet is connecting to a
+    lightwalletd instance, which reveals they are using the Zcash component
+    of the wallet.
 - tell when the user is actively using the wallet.
-    - They can see that the wallet is communicating with lightwalletd when it's in active use.
+    - They can see that the wallet is communicating with lightwalletd when
+    it's in active use.
 - cause a transaction the user sends to fail.
     - They can block the connection between the wallet and lightwalletd.
 - make the user think outdated information (transactions, balance, etc.) is up to date.
@@ -209,7 +212,8 @@ Let's move on to the weakest adversary considered in this model.
 ## Address-Knowing Adversary
 
 **Description:** The adversary only knows some of the users' z-addresses and
-t-addresses, and has no other special capabilities.
+t-addresses, can view the public blockchain, and has no other special
+capabilities.
 
 This is the weakest adversary in our model. The security invariants we expect
 to be satisfied against this adversary are that the adversary...
@@ -232,15 +236,15 @@ to be satisfied against this adversary are that the adversary...
 
 There are several known weaknesses that this adversary can exploit. The adversary can...
 
+- **tell when the user spends shielded funds sent to them by the adversary.**
+    - dust attack: the adversary can send many low-value notes, which will be
+    spent in a transaction with many Sapling inputs (visible on the
+    blockchain).
 - tell when the user sends a t-address transaction.
 - tell when the user receives a t-address transaction
 - tell what the user's current transparent balance is.
 - tell that the user is using this particular wallet app.
     - differneces in note selection might distinguish it from zcashd.
-- **tell when the user spends shielded funds sent to them by the adversary.**
-    - dust attack: the adversary can send many low-value notes, which will be
-    spent in a transaction with many Sapling inputs (visible on the
-    blockchain).
 
 These weaknesses also apply to all of the stronger adversaries in the sections above.
 
@@ -252,5 +256,7 @@ This threat model is missing important details, for example, about:
 running on.
 - Secure usability of the SDK's API.
 - Implicit assumptions about how the SDK is being used in a third-party app.
+- More fine-grained models of adversaries, e.g. one that has eclipsed the
+lightwalletd node but has not been able to compromise it fully.
 
 These shortcomings will be addressed in future updates to the threat model.
