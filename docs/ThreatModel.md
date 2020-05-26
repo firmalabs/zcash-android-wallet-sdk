@@ -43,7 +43,7 @@ case based on their experience using other cryptocurrency wallets. We've
 highlighted those ones in bold. Brief technical details of how the adversary
 could exploit the weakness are included with each one.
 
-Let's begin with the most powerful type of adversary considered by our model.
+Let's begin with the most powerful kind of adversary considered by our model.
 
 ## Lightwalletd-Compromising Adversary
 
@@ -54,9 +54,9 @@ Let's begin with the most powerful type of adversary considered by our model.
 *app). The adversary knows some addresses belonging to the user. Accidental
 *reorgs happen regularly.
 
-The security invariants we expect to be satisfied against this adversary are
-all the ones we expect to be satisfied against weaker adversaries in the
-section below, and in addition, that the adversary...
+We expect the following security invariants to be satisfied when the user is
+attacked by this kind of adversary as well as any of the weaker ones in the
+sections below. The adversary...
 
 - can't tell what the user's current shielded balance is (aside from it being
 zero when the wallet is created).
@@ -137,9 +137,9 @@ eventually happen, the security properties degrade to the column to the left
 for the duration of the compromise, and possibly longer if the effects of the
 attack persist.*
 
-The security invariants we expect to be satisfied against this adversary are
-all the ones we expect to be satisfied against weaker adversaries in the
-section below, plus that the adversary...
+We expect the following security invariants to be satisfied when the user is
+attacked by this kind of adversary as well as any of the weaker ones in the
+sections below. The adversary...
 
 - can't make the wallet display the wrong memo field for a given transaction.
 - can't make the user think their balance is lower than it actually is.
@@ -151,7 +151,7 @@ section below, plus that the adversary...
 
 There are no known weaknesses that apply to this adversary specifically. All
 of the known weaknesses in the sections below for weaker adveraries apply to
-this one as well.
+this adversary as well.
 
 ## Network- and Lightwalletd-Surveiling Adjacent-App Adversary
 
@@ -162,50 +162,52 @@ lightwalletd server and the Internet. The adversary knows some addresses
 belonging to the user. Accidental reorgs happen regularly. We assume defenses
 are in place to detect eclipsing of the lightwalletd node.
 
-There are no security invariants that we expect to be satisfied for this
-adversary but not for the next-weaker one.
+There are no security invariants that we expect to be satisfied specifically
+for this adversary but not the one discussed in the previous section.
 
 There are several known weaknesses that this kind of adversary can exploit.
 The adversary can...
 
-- **...tell *that* and *when* the user received a fully-shielded transaction.**
+- **tell *that* and *when* the user received a fully-shielded transaction.**
   - The wallet fetches the memo from lightwalletd separately, which uses
   more bandwidth, and that is visible even though the connection is
   encrypted.
-- **...tell *that* and *when* the user sends a fully-sheilded transaction.**
+- **tell *that* and *when* the user sends a fully-sheilded transaction.**
   - The act of sending a transaction uses more bandwidth, which is visible
   even though the connection is encrypted.
-- **...tell how many transactions the user has sent or received over time.**
+- **tell how many transactions the user has sent or received over time.**
   - For the same reasons as above.
-- **...tell who the user is.**
+- **tell who the user is.**
   - The adversary knows the user's IP address, which could lead them to the user's real identity.
-- **..tell where the user is.**
+- **tell where the user is.**
   - The adversary could look up the user's IP address in a geolocation database to approximate their location.
-- **...learn who the user is sending/receiving funds to/from in fully-shielded transactions.**
+- **learn who the user is sending/receiving funds to/from in fully-shielded transactions.**
   - When both users are using the same lightwalletd instance, even though the connections are encrypted, the adversary will be able to correlate bandwidth spikes that look like sends from one user with bandwidth spikes that look like receives from another user.
-- **...determine whether or not the user's wallet owns a particular address.**
+- **determine whether or not the user's wallet owns a particular address.**
   - The adversary could send funds to that address and watch to see if there are bandwidth spikes that look like the wallet fetched a memo around the same time.
-- **...tell that the user spends or receives money according to a certain pattern (e.g. recurring payments) using fully-shielded transacitons.**
+- **tell that the user spends or receives money according to a certain pattern (e.g. recurring payments) using fully-shielded transacitons.**
   - They would observe bandwidth spikes that look like sends/receives following the same pattern.
-- ...tell which of many users of the lightwalletd instance the user is.
+- tell which of many users of the lightwalletd instance the user is.
   - If the user reconnects from the same IP address, they can usually assume it is the same user.
-- ...silently prevent the user from receiving wallet security updates or security notices
+- silently prevent the user from receiving wallet security updates or security notices
   - By blocking the wallet's connection to the internet.
-- ...tell when the user's wallet was created.
+- tell when the user's wallet was created.
     - The wallet only downloads blocks starting with its birthday. By
     observing how much bandwidth gets used during the initial download, the
     adversary can determine roughly how many blocks it downloaded, and thus
     roughtly what its birthday is.
-- ...tell which cryptocurrencies the user is using if the SDK is used in a multi-currency wallet.
+- tell which cryptocurrencies the user is using if the SDK is used in a multi-currency wallet.
     - The adversary would be able to see that the wallet is connecting to a lightwalletd instance, which reveals they are using Zcash.
-- ...tell when the user is actively using the wallet.
+- tell when the user is actively using the wallet.
     - They can see that the wallet is communicating with lightwalletd when it's in active use.
-- ...cause a transaction the user sends to fail.
+- cause a transaction the user sends to fail.
     - They can block the connection between the wallet and lightwalletd.
-- ...make the user think outdated information (transactions, balance, etc.) is up to date.
+- make the user think outdated information (transactions, balance, etc.) is up to date.
     - By blocking the connection to lightwalletd.
 
 These weaknesses also apply to the stronger adversaries in the sections above.
+
+Let's move on to the weakest adversary considered in this model.
 
 ## Address-Knowing Adversary
 
@@ -231,24 +233,27 @@ to be satisfied against this adversary are that the adversary...
 - can't determine whether or not the user's wallet owns a particular address.
 - can't tell that the user spends money according to a certain pattern (e.g. recurring payments) using fully-shielded transacitons.
 
-There are several known weaknesses against this adversary. The adversary can...
+There are several known weaknesses that this adversary can exploit. The adversary can...
 
 - tell when the user sends a t-address transaction.
 - tell when the user receives a t-address transaction
 - tell what the user's current transparent balance is.
 - tell that the user is using this particular wallet app.
     - differneces in note selection might distinguish it from zcashd.
-- tell when the user spends shielded funds sent to them by the adversary versus someone else.
-    - dust attack: send many low-value notes, which will need to be aggregated to be spent (visible on the blockchain).
+- **tell when the user spends shielded funds sent to them by the adversary.**
+    - dust attack: the adversary can send many low-value notes, which will be
+    spent in a transaction with many Sapling inputs (visible on the
+    blockchain).
 
 These weaknesses also apply to all of the stronger adversaries in the sections above.
 
 ## Limitations
 
-This threat model is missing important details, e.g. about:
+This threat model is missing important details, for example, about:
 
-- Adversaries that have physical access to the device the SDK is running on.
+- Adversaries that have physical access to the device the app or SDK is
+running on.
 - Secure usability of the SDK's API.
-- Implicit assumptions about how the SDK is being used.
+- Implicit assumptions about how the SDK is being used in a third-party app.
 
 These shortcomings will be addressed in future updates to the threat model.
