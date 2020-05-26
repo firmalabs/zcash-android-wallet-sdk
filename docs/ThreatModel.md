@@ -50,16 +50,22 @@ Let's begin with the most powerful kind of adversary considered by our model.
 ## Lightwalletd-Compromising Adversary
 
 **Description:** The lightwalletd service the user connects to is compromised
-*or outright malicious. In addition to being in complete control over
-*lightwalletd, the adversary can intercept all of the app's network traffic
-*and can run code as another app on the user's phone (e.g. a fake calculator
-*app). The adversary knows some addresses belonging to the user. Accidental
-*reorgs happen regularly.
+or outright malicious. In addition to being in complete control over
+lightwalletd, the adversary can intercept all of the app's network traffic
+and can run code as another app on the user's phone (e.g. a fake calculator
+app). The adversary knows some addresses belonging to the user. Accidental
+reorgs happen regularly.
 
 We expect the following security invariants to be satisfied when the user is
 attacked by this kind of adversary as well as any of the weaker ones in the
 sections below. The adversary...
 
+- can't execute arbitrary code on the user's phone.
+- can't learn any of the user's cryptographic key material (spending keys, viewing keys, seed phrase, etc.)
+- can't steal the user's funds.
+- can't burn the user's funds or otherwise make them unspendable.
+- can't cause the funds the user sends to someone else to be gone from their wallet but be unspendable by the recipient.
+- can't make the user send funds to the wrong address.
 - can't tell what the user's current shielded balance is (aside from it being
 zero when the wallet is created).
 - can't learn information about the user's shielded balance over time (aside
@@ -71,23 +77,14 @@ network.
 transactions the user receives.
 - can't learn information about the value, memo field, etc. of shielded
 transactions the user sends.
-- can't learn who the user is sending funds to in fully-shielded transactions
+- can't learn who the user is sending/receiving funds to/from in fully-shielded transactions
 as long as the other user isn't using the same lightwalletd service provider
-and there is no collusion with that other service provider.
-    - This is not a useful security invariant, because it is hard for users to understand.
-- can't learn who the user is receiving funds from in fully-sheilded
-transactions as long as the other user isn't using the same lightwalletd
-service provider and there is no collusion with that other service provider.
+and there is no collusion between the adversary and that other service provider.
     - This is not a useful security invariant, because it is hard for users to understand.
 - can't find out one of the user's wallet addresses unless they've given it out.
-- can't tell how many distinct people have sent the user funds (all transactions coming from one vs. many).
-- can't tell how many distinct people the user has sent funds to (all transactions going to one vs. many).
-- can't steal the user's funds.
-- can't burn the user's funds or otherwise make them unspendable.
-- can't make the user send funds to the wrong address.
+  - **Note that this adversary *can* check whether an address they have belongs to the user, see the weaknesses below.**
 - can't make the user think person X has sent them funds when it was actually someone different.
 - can't make the funds go to someone else when someone was trying to send the user funds.
-- can't take execute arbitrary code on the user's phone.
 - can't make the user send the wrong amount of funds.
 - can't make the user send a transaction with a memo field they did not intend.
 - can't make the user send funds when they did not intend to.
@@ -96,9 +93,7 @@ service provider and there is no collusion with that other service provider.
 - can't make it look (to someone else) like the user is receiving money from somewhere that they are not.
 - can't send money to the user at any address of theirs that the adversary did not already know about.
 - can't cause the app to display an false official-looking message.
-- can't learn any of the user's cryptographic key material (spending keys, viewing keys, seed phrase, etc.)
 - can't see any of the user's wallet history when they connect to this lightwalled instance for the first time (after previously using a different one).
-- can't cause the funds the user sends to someone else to be gone from their wallet but be unspendable by the recipient.
 
 There are some known weaknesses this adversary can exploit. In addition to
 all of the known weaknesses from the sections below (which also apply to this
