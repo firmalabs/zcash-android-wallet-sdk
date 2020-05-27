@@ -34,6 +34,8 @@ For each kind of adversary, we list:
 
 - Which security invariants we expect are satisfied against that adversary
 (and all weaker ones). If one of these are false, then it's a security bug.
+If a user is relying on a security invariant that's not in the threat model,
+then that's also considered a security bug.
 - Known weakneses: Which security invariants we know are *not* satisfied
 against that adversary (and all stronger ones). If a user does not understand
 one of these weakneses, then that is a security problem in the app's
@@ -91,7 +93,7 @@ and there is no collusion between the adversary and that other service provider.
 - can't make it look (to someone else) like the user is sending funds to somewhere they are not.
 - can't make it look (to someone else) like the user is receiving money from somewhere that they are not.
 - can't send money to the user at any address of theirs that the adversary did not already know about.
-- can't cause the app to display an false official-looking message.
+- can't cause the app to display a false official-looking message.
 - can't see any of the user's wallet history when they connect to this lightwalled instance for the first time (after previously using a different one).
 
 There are some known weaknesses this adversary can exploit. In addition to
@@ -129,9 +131,9 @@ user's phone (e.g. fake calculator app), and (c) can read (but not write to)
 the lightwalletd server's private memory. The adversary knows some addresses
 belonging to the user. Accidental reorgs happen regularly. **NB:** *If the
 lightwalletd server gets compromised temporarily, which we should assume will
-eventually happen, the security properties degrade to the column to the left
-for the duration of the compromise, and possibly longer if the effects of the
-attack persist.*
+eventually happen, the security properties degrade to the
+Lightwalletd-Compromising Adversary for the duration of the compromise, and
+possibly longer if the effects of the attack persist.*
 
 We expect the following security invariants to be satisfied when the user is
 attacked by this kind of adversary as well as any of the weaker ones in the
