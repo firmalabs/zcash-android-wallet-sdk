@@ -211,7 +211,7 @@ cargo {
         }
     }
     exec { spec, toolchain ->
-        spec.environment("DUMMY_VAR", "5280")
+        spec.environment("PATH", "/srv/zcashd/.cargo/bin/")
     }
 }
 
