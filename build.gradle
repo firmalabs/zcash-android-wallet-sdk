@@ -165,6 +165,10 @@ clean {
 dokka {
     outputFormat = 'html'
     outputDirectory = "$buildDir/docs/rtd"
+    configuration {
+        moduleName = "android-sdk"
+        includes = ["packages.md"]
+    }
 }
 
 protobuf {
