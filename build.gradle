@@ -210,6 +210,9 @@ cargo {
         zcashtestnetRelease {
         }
     }
+    exec { spec, toolchain ->
+        spec.environment("DUMMY_VAR", "5280")
+    }
 }
 
 dependencies {
