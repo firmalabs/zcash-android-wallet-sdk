@@ -198,6 +198,7 @@ cargo {
     profile = "release"
     forceTargets = true
     prebuiltToolchains = true
+    verbose = true
     variants {
         zcashmainnetDebug {
             defaultFeaturesAnd("mainnet")
@@ -211,7 +212,7 @@ cargo {
         }
     }
     exec { spec, toolchain ->
-        spec.environment("PATH", "/srv/zcashd/.cargo/bin/")
+        spec.environment("PATH", "/workspace/.cargo/bin/")
     }
 }
 
