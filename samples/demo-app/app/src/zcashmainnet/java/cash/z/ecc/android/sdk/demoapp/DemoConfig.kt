@@ -4,7 +4,7 @@ data class DemoConfig(
     val alias: String = "SdkDemo",
     val host: String = "lightwalletd.electriccoin.co",
     val port: Int = 9067,
-    val birthdayHeight: Int = 968000,
+    val birthdayHeight: Int = 1062772,
     val utxoEndHeight: Int = 968085,
     val sendAmount: Double = 0.000018,
 

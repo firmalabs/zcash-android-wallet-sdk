@@ -536,7 +536,7 @@ dependencies = [
 [[package]]
 name = "equihash"
 version = "0.1.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=data_access_api#7ac08631b913d6fb917d062c2f1654e2568d350b"
+source = "git+https://github.com/nuttycom/librustzcash?branch=data_access_api#e96578195adfe0a80bc4be897e72d89813ea7387"
 dependencies = [
  "blake2b_simd",
  "byteorder",
@@ -1583,9 +1583,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.59"
+version = "1.0.60"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dcac07dbffa1c65e7f816ab9eba78eb142c6d44410f4eeba1e26e4f5dfa56b95"
+checksum = "1500e84d27fe482ed1dc791a56eddc2f230046a040fa908c08bda1d9fb615779"
 dependencies = [
  "itoa",
  "ryu",
@@ -2071,7 +2071,7 @@ dependencies = [
 [[package]]
 name = "zcash_client_backend"
 version = "0.4.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=data_access_api#7ac08631b913d6fb917d062c2f1654e2568d350b"
+source = "git+https://github.com/nuttycom/librustzcash?branch=data_access_api#e96578195adfe0a80bc4be897e72d89813ea7387"
 dependencies = [
  "base64 0.12.3",
  "bech32",
@@ -2094,7 +2094,7 @@ dependencies = [
 [[package]]
 name = "zcash_client_sqlite"
 version = "0.2.1"
-source = "git+https://github.com/nuttycom/librustzcash?branch=data_access_api#7ac08631b913d6fb917d062c2f1654e2568d350b"
+source = "git+https://github.com/nuttycom/librustzcash?branch=data_access_api#e96578195adfe0a80bc4be897e72d89813ea7387"
 dependencies = [
  "bech32",
  "bs58",
@@ -2112,7 +2112,7 @@ dependencies = [
 [[package]]
 name = "zcash_primitives"
 version = "0.4.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=data_access_api#7ac08631b913d6fb917d062c2f1654e2568d350b"
+source = "git+https://github.com/nuttycom/librustzcash?branch=data_access_api#e96578195adfe0a80bc4be897e72d89813ea7387"
 dependencies = [
  "aes",
  "bitvec",
@@ -2138,7 +2138,7 @@ dependencies = [
 [[package]]
 name = "zcash_proofs"
 version = "0.4.0"
-source = "git+https://github.com/nuttycom/librustzcash?branch=data_access_api#7ac08631b913d6fb917d062c2f1654e2568d350b"
+source = "git+https://github.com/nuttycom/librustzcash?branch=data_access_api#e96578195adfe0a80bc4be897e72d89813ea7387"
 dependencies = [
  "bellman",
  "blake2b_simd",
