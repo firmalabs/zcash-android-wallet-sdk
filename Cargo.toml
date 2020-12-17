@@ -44,17 +44,17 @@ tls-api-rustls = { version = "0.4", optional = true }
 [build-dependencies]
 protobuf-codegen-pure = "2.14"
 
-#[patch.crates-io]
-#zcash_client_backend = { path = '../../clones/librustzcash/zcash_client_backend' }
-#zcash_client_sqlite = { path = '../../clones/librustzcash/zcash_client_sqlite' }
-#zcash_primitives = { path = '../../clones/librustzcash/zcash_primitives' }
-#zcash_proofs = { path = '../../clones/librustzcash/zcash_proofs' }
-
 [patch.crates-io]
-zcash_client_backend = {git = "https://github.com/nuttycom/librustzcash", branch = "data_access_api"}
-zcash_client_sqlite = {git = "https://github.com/nuttycom/librustzcash", branch = "data_access_api"}
-zcash_primitives = {git = "https://github.com/nuttycom/librustzcash", branch = "data_access_api"}
-zcash_proofs = {git = "https://github.com/nuttycom/librustzcash", branch = "data_access_api"}
+zcash_client_backend = { path = '../../clones/librustzcash/zcash_client_backend' }
+zcash_client_sqlite = { path = '../../clones/librustzcash/zcash_client_sqlite' }
+zcash_primitives = { path = '../../clones/librustzcash/zcash_primitives' }
+zcash_proofs = { path = '../../clones/librustzcash/zcash_proofs' }
+
+#[patch.crates-io]
+#zcash_client_backend = {git = "https://github.com/nuttycom/librustzcash", branch = "data_access_api"}
+#zcash_client_sqlite = {git = "https://github.com/nuttycom/librustzcash", branch = "data_access_api"}
+#zcash_primitives = {git = "https://github.com/nuttycom/librustzcash", branch = "data_access_api"}
+#zcash_proofs = {git = "https://github.com/nuttycom/librustzcash", branch = "data_access_api"}
 
 [features]
 mainnet = ["zcash_client_sqlite/mainnet"]
