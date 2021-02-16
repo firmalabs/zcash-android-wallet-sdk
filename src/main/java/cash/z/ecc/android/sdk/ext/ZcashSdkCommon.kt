@@ -111,4 +111,9 @@ open class ZcashSdkCommon {
      */
     val CLOUD_PARAM_DIR_URL = "https://z.cash/downloads/"
 
+    /**
+     * The default memo to use when shielding transparent funds.
+     */
+    open val DEFAULT_SHIELD_FUNDS_MEMO_PREFIX = "shielding:"
+
 }
